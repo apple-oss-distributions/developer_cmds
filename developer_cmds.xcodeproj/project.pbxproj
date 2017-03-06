@@ -17,10 +17,8 @@
 				FDA9C85B0FD5E85E00A6EA6E /* PBXTargetDependency */,
 				FDA9C8B60FD5EAA500A6EA6E /* PBXTargetDependency */,
 				FDA9C9870FD5F06900A6EA6E /* PBXTargetDependency */,
-				FDA9C9850FD5F06900A6EA6E /* PBXTargetDependency */,
 				FDA9C8DA0FD5EBB200A6EA6E /* PBXTargetDependency */,
 				FDA9C8FC0FD5EC3300A6EA6E /* PBXTargetDependency */,
-				FC8276C614C4CAE900A7B4C8 /* PBXTargetDependency */,
 			);
 			name = default;
 			productName = Default;
@@ -37,23 +35,9 @@
 			name = lorder;
 			productName = lorder;
 		};
-		FDA9C9820FD5F06400A6EA6E /* mkdep */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = FDA9C98C0FD5F08700A6EA6E /* Build configuration list for PBXAggregateTarget "mkdep" */;
-			buildPhases = (
-				FDA9C9810FD5F06400A6EA6E /* ShellScript */,
-				FDA9C9A30FD5F12200A6EA6E /* Install man1 */,
-			);
-			dependencies = (
-			);
-			name = mkdep;
-			productName = mkdep;
-		};
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		FC8276B914C4C9FB00A7B4C8 /* what.1 in Install man1 */ = {isa = PBXBuildFile; fileRef = FC8276A014C4C95000A7B4C8 /* what.1 */; };
-		FC8276BA14C4CA0200A7B4C8 /* what.c in Sources */ = {isa = PBXBuildFile; fileRef = FC8276A114C4C95000A7B4C8 /* what.c */; };
 		FDA9C83F0FD5E7E300A6EA6E /* asa.c in Sources */ = {isa = PBXBuildFile; fileRef = FDA9C7E40FD5D90F00A6EA6E /* asa.c */; };
 		FDA9C84D0FD5E82800A6EA6E /* asa.1 in Install man1 */ = {isa = PBXBuildFile; fileRef = FDA9C7E30FD5D90F00A6EA6E /* asa.1 */; };
 		FDA9C85F0FD5E87200A6EA6E /* C.c in Sources */ = {isa = PBXBuildFile; fileRef = FDA9C7E70FD5D92800A6EA6E /* C.c */; };
@@ -84,18 +68,10 @@
 		FDA9C8EA0FD5EBF600A6EA6E /* rpcgen.1 in Install man1 */ = {isa = PBXBuildFile; fileRef = FDA9C8250FD5D92800A6EA6E /* rpcgen.1 */; };
 		FDA9C9010FD5EC4800A6EA6E /* unifdef.c in Sources */ = {isa = PBXBuildFile; fileRef = FDA9C8290FD5D92800A6EA6E /* unifdef.c */; };
 		FDA9C9030FD5EC5F00A6EA6E /* unifdef.1 in Install man1 */ = {isa = PBXBuildFile; fileRef = FDA9C8280FD5D92800A6EA6E /* unifdef.1 */; };
-		FDA9C98E0FD5F0F200A6EA6E /* mkdep.1 in Install man1 */ = {isa = PBXBuildFile; fileRef = FDA9C8100FD5D92800A6EA6E /* mkdep.1 */; };
 		FDA9C9900FD5F10200A6EA6E /* lorder.1 in Install man1 */ = {isa = PBXBuildFile; fileRef = FDA9C80B0FD5D92800A6EA6E /* lorder.1 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		FC8276C514C4CAE900A7B4C8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FDA9C7D70FD5D84000A6EA6E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = FC8276A314C4C9A600A7B4C8;
-			remoteInfo = what;
-		};
 		FDA9C8580FD5E85C00A6EA6E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FDA9C7D70FD5D84000A6EA6E /* Project object */;
@@ -131,13 +107,6 @@
 			remoteGlobalIDString = FDA9C8F70FD5EC2A00A6EA6E;
 			remoteInfo = unifdef;
 		};
-		FDA9C9840FD5F06900A6EA6E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FDA9C7D70FD5D84000A6EA6E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = FDA9C9820FD5F06400A6EA6E;
-			remoteInfo = mkdep;
-		};
 		FDA9C9860FD5F06900A6EA6E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FDA9C7D70FD5D84000A6EA6E /* Project object */;
@@ -148,17 +117,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		FC8276A714C4C9A600A7B4C8 /* Install man1 */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 8;
-			dstPath = "$(DT_TOOLCHAIN_DIR)/usr/share/man/man1";
-			dstSubfolderSpec = 0;
-			files = (
-				FC8276B914C4C9FB00A7B4C8 /* what.1 in Install man1 */,
-			);
-			name = "Install man1";
-			runOnlyForDeploymentPostprocessing = 1;
-		};
 		FDA9C84F0FD5E82D00A6EA6E /* Install man1 */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 8;
@@ -225,23 +183,9 @@
 			name = "Install man1";
 			runOnlyForDeploymentPostprocessing = 1;
 		};
-		FDA9C9A30FD5F12200A6EA6E /* Install man1 */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 8;
-			dstPath = "$(DT_TOOLCHAIN_DIR)/usr/share/man/man1";
-			dstSubfolderSpec = 0;
-			files = (
-				FDA9C98E0FD5F0F200A6EA6E /* mkdep.1 in Install man1 */,
-			);
-			name = "Install man1";
-			runOnlyForDeploymentPostprocessing = 1;
-		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		FC8276A014C4C95000A7B4C8 /* what.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = what.1; sourceTree = "<group>"; };
-		FC8276A114C4C95000A7B4C8 /* what.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = what.c; sourceTree = "<group>"; };
-		FC8276AC14C4C9A600A7B4C8 /* what */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = what; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDA9C7E30FD5D90F00A6EA6E /* asa.1 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.man; path = asa.1; sourceTree = "<group>"; };
 		FDA9C7E40FD5D90F00A6EA6E /* asa.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = asa.c; sourceTree = "<group>"; };
 		FDA9C7E70FD5D92800A6EA6E /* C.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = C.c; sourceTree = "<group>"; };
@@ -266,9 +210,6 @@
 		FDA9C8090FD5D92800A6EA6E /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		FDA9C80B0FD5D92800A6EA6E /* lorder.1 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.man; path = lorder.1; sourceTree = "<group>"; };
 		FDA9C80C0FD5D92800A6EA6E /* lorder.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = lorder.sh; sourceTree = "<group>"; };
-		FDA9C8100FD5D92800A6EA6E /* mkdep.1 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.man; path = mkdep.1; sourceTree = "<group>"; };
-		FDA9C8120FD5D92800A6EA6E /* mkdep.gcc.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = mkdep.gcc.sh; sourceTree = "<group>"; };
-		FDA9C8140FD5D92800A6EA6E /* mkdep.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = mkdep.sh; sourceTree = "<group>"; };
 		FDA9C8180FD5D92800A6EA6E /* rpc_clntout.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = rpc_clntout.c; sourceTree = "<group>"; };
 		FDA9C8190FD5D92800A6EA6E /* rpc_cout.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = rpc_cout.c; sourceTree = "<group>"; };
 		FDA9C81A0FD5D92800A6EA6E /* rpc_hout.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = rpc_hout.c; sourceTree = "<group>"; };
@@ -294,13 +235,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		FC8276A614C4C9A600A7B4C8 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		FDA9C8380FD5E7DB00A6EA6E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -339,15 +273,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		FC82769F14C4C95000A7B4C8 /* what */ = {
-			isa = PBXGroup;
-			children = (
-				FC8276A014C4C95000A7B4C8 /* what.1 */,
-				FC8276A114C4C95000A7B4C8 /* what.c */,
-			);
-			path = what;
-			sourceTree = "<group>";
-		};
 		FDA9C7D50FD5D84000A6EA6E = {
 			isa = PBXGroup;
 			children = (
@@ -416,16 +341,6 @@
 			path = lorder;
 			sourceTree = "<group>";
 		};
-		FDA9C80E0FD5D92800A6EA6E /* mkdep */ = {
-			isa = PBXGroup;
-			children = (
-				FDA9C8120FD5D92800A6EA6E /* mkdep.gcc.sh */,
-				FDA9C8140FD5D92800A6EA6E /* mkdep.sh */,
-				FDA9C8100FD5D92800A6EA6E /* mkdep.1 */,
-			);
-			path = mkdep;
-			sourceTree = "<group>";
-		};
 		FDA9C8160FD5D92800A6EA6E /* rpcgen */ = {
 			isa = PBXGroup;
 			children = (
@@ -465,7 +380,6 @@
 				FDA9C8B20FD5EAA100A6EA6E /* indent */,
 				FDA9C8D60FD5EBA400A6EA6E /* rpcgen */,
 				FDA9C8F80FD5EC2A00A6EA6E /* unifdef */,
-				FC8276AC14C4C9A600A7B4C8 /* what */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -477,10 +391,8 @@
 				FDA9C7E60FD5D92800A6EA6E /* ctags */,
 				FDA9C7FE0FD5D92800A6EA6E /* indent */,
 				FDA9C80A0FD5D92800A6EA6E /* lorder */,
-				FDA9C80E0FD5D92800A6EA6E /* mkdep */,
 				FDA9C8160FD5D92800A6EA6E /* rpcgen */,
 				FDA9C8260FD5D92800A6EA6E /* unifdef */,
-				FC82769F14C4C95000A7B4C8 /* what */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -488,23 +400,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		FC8276A314C4C9A600A7B4C8 /* what */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = FC8276AA14C4C9A600A7B4C8 /* Build configuration list for PBXNativeTarget "what" */;
-			buildPhases = (
-				FC8276A414C4C9A600A7B4C8 /* Sources */,
-				FC8276A614C4C9A600A7B4C8 /* Frameworks */,
-				FC8276A714C4C9A600A7B4C8 /* Install man1 */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = what;
-			productName = unifdef;
-			productReference = FC8276AC14C4C9A600A7B4C8 /* what */;
-			productType = "com.apple.product-type.tool";
-		};
 		FDA9C8390FD5E7DB00A6EA6E /* asa */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = FDA9C83E0FD5E7DC00A6EA6E /* Build configuration list for PBXNativeTarget "asa" */;
@@ -596,6 +491,8 @@
 /* Begin PBXProject section */
 		FDA9C7D70FD5D84000A6EA6E /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+			};
 			buildConfigurationList = FDA9C7DA0FD5D84000A6EA6E /* Build configuration list for PBXProject "developer_cmds" */;
 			compatibilityVersion = "Xcode 2.4";
 			developmentRegion = English;
@@ -613,10 +510,8 @@
 				FDA9C8540FD5E85900A6EA6E /* ctags */,
 				FDA9C8B10FD5EAA100A6EA6E /* indent */,
 				FDA9C97F0FD5F05400A6EA6E /* lorder */,
-				FDA9C9820FD5F06400A6EA6E /* mkdep */,
 				FDA9C8D50FD5EBA400A6EA6E /* rpcgen */,
 				FDA9C8F70FD5EC2A00A6EA6E /* unifdef */,
-				FC8276A314C4C9A600A7B4C8 /* what */,
 			);
 		};
 /* End PBXProject section */
@@ -651,31 +546,9 @@
 			shellScript = ". \"$PROJECT_DIR\"/xcodescripts/install-lorder.sh";
 			showEnvVarsInLog = 0;
 		};
-		FDA9C9810FD5F06400A6EA6E /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-			shellPath = /bin/sh;
-			shellScript = ". \"$PROJECT_DIR\"/xcodescripts/install-mkdep.sh";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		FC8276A414C4C9A600A7B4C8 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FC8276BA14C4CA0200A7B4C8 /* what.c in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		FDA9C8370FD5E7DB00A6EA6E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -739,11 +612,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		FC8276C614C4CAE900A7B4C8 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = FC8276A314C4C9A600A7B4C8 /* what */;
-			targetProxy = FC8276C514C4CAE900A7B4C8 /* PBXContainerItemProxy */;
-		};
 		FDA9C8590FD5E85C00A6EA6E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = FDA9C8390FD5E7DB00A6EA6E /* asa */;
@@ -769,11 +637,6 @@
 			target = FDA9C8F70FD5EC2A00A6EA6E /* unifdef */;
 			targetProxy = FDA9C8FB0FD5EC3300A6EA6E /* PBXContainerItemProxy */;
 		};
-		FDA9C9850FD5F06900A6EA6E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = FDA9C9820FD5F06400A6EA6E /* mkdep */;
-			targetProxy = FDA9C9840FD5F06900A6EA6E /* PBXContainerItemProxy */;
-		};
 		FDA9C9870FD5F06900A6EA6E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = FDA9C97F0FD5F05400A6EA6E /* lorder */;
@@ -782,14 +645,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		FC8276AB14C4C9A600A7B4C8 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INSTALL_PATH = "$(DT_TOOLCHAIN_DIR)/usr/bin";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
 		FDA9C7D90FD5D84000A6EA6E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -859,24 +714,9 @@
 			};
 			name = Release;
 		};
-		FDA9C9830FD5F06400A6EA6E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = mkdep;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		FC8276AA14C4C9A600A7B4C8 /* Build configuration list for PBXNativeTarget "what" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				FC8276AB14C4C9A600A7B4C8 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		FDA9C7DA0FD5D84000A6EA6E /* Build configuration list for PBXProject "developer_cmds" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -937,14 +777,6 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FDA9C9800FD5F05400A6EA6E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		FDA9C98C0FD5F08700A6EA6E /* Build configuration list for PBXAggregateTarget "mkdep" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				FDA9C9830FD5F06400A6EA6E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
