@@ -182,6 +182,10 @@ usage:		(void)fprintf(stderr,
 			}
 		}
 	}
+#ifdef __APPLE__
+	if (ferror(stdout) != 0 || fflush(stdout) != 0)
+		err(1, "stdout");
+#endif
 	exit(exit_val);
 }
 
