@@ -1,6 +1,6 @@
-/*	$NetBSD: tree.c,v 1.5 1997/10/18 13:18:58 lukem Exp $	*/
-
-/*
+/*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1987, 1993, 1994
  *	The Regents of the University of California.  All rights reserved.
  *
@@ -12,11 +12,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -33,14 +29,14 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-#ifndef lint
 #if 0
+#ifndef lint
 static char sccsid[] = "@(#)tree.c	8.3 (Berkeley) 4/2/94";
-#else
-__RCSID("$NetBSD: tree.c,v 1.5 1997/10/18 13:18:58 lukem Exp $");
 #endif
-#endif /* not lint */
+#endif
+
+#include <sys/cdefs.h>
+__FBSDID("$FreeBSD$");
 
 #include <err.h>
 #include <limits.h>
@@ -50,17 +46,15 @@ __RCSID("$NetBSD: tree.c,v 1.5 1997/10/18 13:18:58 lukem Exp $");
 
 #include "ctags.h"
 
-static void	add_node __P((NODE *, NODE *));
-static void	free_tree __P((NODE *));
+static void	add_node(NODE *, NODE *);
+static void	free_tree(NODE *);
 
 /*
  * pfnote --
  *	enter a new node in the tree
  */
 void
-pfnote(name, ln)
-	char	*name;
-	int	ln;
+pfnote(const char *name, int ln)
 {
 	NODE	*np;
 	char	*fp;
@@ -73,26 +67,26 @@ pfnote(name, ln)
 		free_tree(head);
 		/*NOSTRICT*/
 		if (!(head = np = (NODE *)malloc(sizeof(NODE))))
-			err(1, "out of space");
+			errx(1, "out of space");
 	}
 	if (!xflag && !strcmp(name, "main")) {
 		if (!(fp = strrchr(curfile, '/')))
 			fp = curfile;
 		else
 			++fp;
-		(void)sprintf(nbuf, "M%s", fp);
+		(void)snprintf(nbuf, sizeof(nbuf), "M%s", fp);
 		fp = strrchr(nbuf, '.');
 		if (fp && !fp[2])
 			*fp = EOS;
 		name = nbuf;
 	}
 	if (!(np->entry = strdup(name)))
-		err(1, "strdup");
+		err(1, NULL);
 	np->file = curfile;
 	np->lno = ln;
 	np->left = np->right = 0;
 	if (!(np->pat = strdup(lbuf)))
-		err(1, "strdup");
+		err(1, NULL);
 	if (!head)
 		head = np;
 	else
@@ -100,13 +94,11 @@ pfnote(name, ln)
 }
 
 static void
-add_node(node, cur_node)
-	NODE	*node,
-		*cur_node;
+add_node(NODE *node, NODE *cur_node)
 {
 	int	dif;
 
-	dif = strcmp(node->entry, cur_node->entry);
+	dif = strcoll(node->entry, cur_node->entry);
 	if (!dif) {
 		if (node->file == cur_node->file) {
 			if (!wflag)
@@ -130,13 +122,14 @@ add_node(node, cur_node)
 }
 
 static void
-free_tree(node)
-	NODE	*node;
+free_tree(NODE *node)
 {
+	NODE *node_next;
 	while (node) {
 		if (node->right)
 			free_tree(node->right);
+		node_next = node->left;
 		free(node);
-		node = node->left;
+		node = node_next;
 	}
 }

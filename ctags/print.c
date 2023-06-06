@@ -1,6 +1,6 @@
-/*	$NetBSD: print.c,v 1.5 1997/10/18 13:18:52 lukem Exp $	*/
-
-/*
+/*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1987, 1993, 1994
  *	The Regents of the University of California.  All rights reserved.
  *
@@ -12,11 +12,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -33,30 +29,28 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-#ifndef lint
 #if 0
+#ifndef lint
 static char sccsid[] = "@(#)print.c	8.3 (Berkeley) 4/2/94";
-#else 
-__RCSID("$NetBSD: print.c,v 1.5 1997/10/18 13:18:52 lukem Exp $");
 #endif
-#endif /* not lint */
+#endif
+
+#include <sys/cdefs.h>
+__FBSDID("$FreeBSD$");
 
 #include <limits.h>
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include <unistd.h>
 
 #include "ctags.h"
 
 /*
- * ct_getline --
+ * get_line --
  *	get the line the token of interest occurred on,
  *	prepare it for printing.
  */
 void
-ct_getline()
+get_line(void)
 {
 	long	saveftell;
 	int	c;
@@ -64,9 +58,9 @@ ct_getline()
 	char	*cp;
 
 	saveftell = ftell(inf);
-	(void)fseek(inf, lineftell, SEEK_SET);
+	(void)fseek(inf, lineftell, L_SET);
 	if (xflag)
-		for (cp = lbuf; GETC(!=, '\n'); *cp++ = c)
+		for (cp = lbuf; GETC(!=, EOF) && c != '\n'; *cp++ = c)
 			continue;
 	/*
 	 * do all processing here, so we don't step through the
@@ -94,7 +88,7 @@ ct_getline()
 			*cp++ = c;
 	}
 	*cp = EOS;
-	(void)fseek(inf, saveftell, SEEK_SET);
+	(void)fseek(inf, saveftell, L_SET);
 }
 
 /*
@@ -102,8 +96,7 @@ ct_getline()
  *	write out the tags
  */
 void
-put_entries(node)
-	NODE	*node;
+put_entries(NODE *node)
 {
 
 	if (node->left)
@@ -112,7 +105,7 @@ put_entries(node)
 		printf("%s %s %d\n",
 		    node->entry, node->file, (node->lno + 63) / 64);
 	else if (xflag)
-		printf("%-16s%4d %-16s %s\n",
+		printf("%-16s %4d %-16s %s\n",
 		    node->entry, node->lno, node->file, node->pat);
 	else
 		fprintf(outf, "%s\t%s\t%c^%s%c\n",

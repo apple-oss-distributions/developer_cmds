@@ -1,6 +1,6 @@
-/*	$NetBSD: ctags.h,v 1.3 1995/03/26 20:14:07 glass Exp $	*/
-
-/*
+/*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1987, 1993, 1994
  *	The Regents of the University of California.  All rights reserved.
  *
@@ -12,11 +12,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -33,6 +29,9 @@
  * SUCH DAMAGE.
  *
  *	@(#)ctags.h	8.3 (Berkeley) 4/2/94
+ *
+ * $FreeBSD$
+ *
  */
 
 #define	bool	char
@@ -47,11 +46,18 @@
 #define	SETLINE		{++lineno;lineftell = ftell(inf);}
 #define	GETC(op,exp)	((c = getc(inf)) op (int)exp)
 
-#define	iswhite(arg)	(_wht[(unsigned)arg])	/* T if char is white */
-#define	begtoken(arg)	(_btk[(unsigned)arg])	/* T if char can start token */
-#define	intoken(arg)	(_itk[(unsigned)arg])	/* T if char can be in token */
-#define	endtoken(arg)	(_etk[(unsigned)arg])	/* T if char ends tokens */
-#define	isgood(arg)	(_gd[(unsigned)arg])	/* T if char can be after ')' */
+/*
+ * These character classification macros assume that the (EOF & 0xff) element
+ * of the arrays is always 'NO', as the EOF return from getc() gets masked
+ * to that value.  Masking with 0xff has no effect for normal characters
+ * returned by getc() provided chars have 8 bits.
+ */
+
+#define	iswhite(arg)	_wht[arg & 0xff]	/* T if char is white */
+#define	begtoken(arg)	_btk[arg & 0xff]	/* T if char can start token */
+#define	intoken(arg)	_itk[arg & 0xff]	/* T if char can be in token */
+#define	endtoken(arg)	_etk[arg & 0xff]	/* T if char ends tokens */
+#define	isgood(arg)	_gd[arg & 0xff]	/* T if char can be after ')' */
 
 typedef struct nd_st {			/* sorting structure */
 	struct nd_st	*left,
@@ -79,14 +85,14 @@ extern char	lbuf[LINE_MAX];
 extern char    *lbp;
 extern char	searchar;		/* ex search character */
 
-extern int	cicmp __P((char *));
-extern void	ct_getline __P((void));
-extern void	pfnote __P((char *, int));
-extern int	skip_key __P((int));
-extern void	put_entries __P((NODE *));
-extern void	toss_yysec __P((void));
-extern void	l_entries __P((void));
-extern void	y_entries __P((void));
-extern int	PF_funcs __P((void));
-extern void	c_entries __P((void));
-extern void	skip_comment __P((void));
+extern int	cicmp(const char *);
+extern void	get_line(void);
+extern void	pfnote(const char *, int);
+extern int	skip_key(int);
+extern void	put_entries(NODE *);
+extern void	toss_yysec(void);
+extern void	l_entries(void);
+extern void	y_entries(void);
+extern int	PF_funcs(void);
+extern void	c_entries(void);
+extern void	skip_comment(int);

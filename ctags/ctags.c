@@ -1,6 +1,6 @@
-/*	$NetBSD: ctags.c,v 1.6 1998/08/25 20:59:36 ross Exp $	*/
-
-/*
+/*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1987, 1993, 1994, 1995
  *	The Regents of the University of California.  All rights reserved.
  *
@@ -12,11 +12,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -33,24 +29,33 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
 #ifndef lint
-__COPYRIGHT("@(#) Copyright (c) 1987, 1993, 1994, 1995\n\
-	The Regents of the University of California.  All rights reserved.\n");
-#endif /* not lint */
+static const char copyright[] =
+"@(#) Copyright (c) 1987, 1993, 1994, 1995\n\
+	The Regents of the University of California.  All rights reserved.\n";
+#endif
 
-#ifndef lint
 #if 0
+#ifndef lint
 static char sccsid[] = "@(#)ctags.c	8.4 (Berkeley) 2/7/95";
 #endif
-__RCSID("$NetBSD: ctags.c,v 1.6 1998/08/25 20:59:36 ross Exp $");
-#endif /* not lint */
+#endif
+
+#include <sys/cdefs.h>
+__FBSDID("$FreeBSD$");
+
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/wait.h>
 
 #include <err.h>
+#include <errno.h>
 #include <limits.h>
+#include <locale.h>
+#include <regex.h>
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 
 #include "ctags.h"
@@ -71,7 +76,7 @@ long	lineftell;		/* ftell after getc( inf ) == '\n' */
 
 int	lineno;			/* line number of current line */
 int	dflag;			/* -d: non-macro defines */
-int	tflag=1;		/* -t: create tags for typedefs */
+int	tflag;			/* -t: create tags for typedefs */
 int	vflag;			/* -v: vgrind style index output */
 int	wflag;			/* -w: suppress warnings */
 int	xflag;			/* -x: cxref style output */
@@ -80,31 +85,34 @@ char	*curfile;		/* current input file name */
 char	searchar = '/';		/* use /.../ searches by default */
 char	lbuf[LINE_MAX];
 
-void	init __P((void));
-int	main __P((int, char **));
-void	find_entries __P((char *));
+void	init(void);
+void	find_entries(char *);
+static void usage(void);
 
 int
-main(argc, argv)
-	int	argc;
-	char	**argv;
+main(int argc, char **argv)
 {
-	static char	*outfile = "tags";	/* output file */
+	static const char	*outfile = "tags";	/* output file */
 	int	aflag;				/* -a: append to tags */
 	int	uflag;				/* -u: update tags */
 	int	exit_val;			/* exit value */
 	int	step;				/* step through args */
 	int	ch;				/* getopts char */
-	char	cmd[100];			/* too ugly to explain */
+
+	setlocale(LC_ALL, "");
 
 	aflag = uflag = NO;
-	while ((ch = getopt(argc, argv, "BFadf:tuwvx")) != -1)
+	tflag = YES;
+	while ((ch = getopt(argc, argv, "BFTadf:tuwvx")) != -1)
 		switch(ch) {
 		case 'B':
 			searchar = '?';
 			break;
 		case 'F':
 			searchar = '/';
+			break;
+		case 'T':
+			tflag = NO;
 			break;
 		case 'a':
 			aflag++;
@@ -116,10 +124,7 @@ main(argc, argv)
 			outfile = optarg;
 			break;
 		case 't':
-			tflag++;
-			break;
-		case 'T':
-			tflag--;
+			tflag = YES;
 			break;
 		case 'u':
 			uflag++;
@@ -134,15 +139,18 @@ main(argc, argv)
 			break;
 		case '?':
 		default:
-			goto usage;
+			usage();
 		}
 	argv += optind;
 	argc -= optind;
-	if (!argc) {
-usage:		(void)fprintf(stderr,
-			"usage: ctags [-BFadtuwvx] [-f tagsfile] file ...\n");
-		exit(1);
-	}
+	if (!argc)
+		usage();
+
+	if (strcmp(outfile, "-") == 0)
+		outfile = "/dev/stdout";
+
+	if (!xflag)
+		setlocale(LC_COLLATE, "C");
 
 	init();
 
@@ -162,36 +170,88 @@ usage:		(void)fprintf(stderr,
 			put_entries(head);
 		else {
 			if (uflag) {
-				for (step = 0; step < argc; step++) {
-					(void)sprintf(cmd,
-						"mv %s OTAGS; fgrep -v '\t%s\t' OTAGS >%s; rm OTAGS",
-							outfile, argv[step],
-							outfile);
-					system(cmd);
+				struct stat sb;
+				FILE *oldf;
+				regex_t *regx;
+
+				if ((oldf = fopen(outfile, "r")) == NULL) {
+					if (errno == ENOENT) {
+						uflag = 0;
+						goto udone;
+					}
+					err(1, "opening %s", outfile);
 				}
+				if (fstat(fileno(oldf), &sb) != 0 ||
+				    !S_ISREG(sb.st_mode)) {
+					fclose(oldf);
+					uflag = 0;
+					goto udone;
+				}
+				if (unlink(outfile))
+					err(1, "unlinking %s", outfile);
+				if ((outf = fopen(outfile, "w")) == NULL)
+					err(1, "recreating %s", outfile);
+				if ((regx = calloc(argc, sizeof(regex_t))) == NULL)
+					err(1, "RE alloc");
+				for (step = 0; step < argc; step++) {
+					(void)strcpy(lbuf, "\t");
+					(void)strlcat(lbuf, argv[step], LINE_MAX);
+					(void)strlcat(lbuf, "\t", LINE_MAX);
+					if (regcomp(regx + step, lbuf,
+					    REG_NOSPEC))
+						warn("RE compilation failed");
+				}
+nextline:
+				while (fgets(lbuf, LINE_MAX, oldf)) {
+					for (step = 0; step < argc; step++)
+						if (regexec(regx + step,
+						    lbuf, 0, NULL, 0) == 0)
+							goto nextline;
+					fputs(lbuf, outf);
+				}
+				for (step = 0; step < argc; step++)
+					regfree(regx + step);
+				free(regx);
+				fclose(oldf);
+				fclose(outf);
 				++aflag;
 			}
+udone:
 			if (!(outf = fopen(outfile, aflag ? "a" : "w")))
-				err(exit_val ? exit_val : 1, "%s", outfile);
+				err(1, "%s", outfile);
 			put_entries(head);
 			(void)fclose(outf);
 			if (uflag) {
-				(void)sprintf(cmd, "sort -o %s %s",
-						outfile, outfile);
-				system(cmd);
+				pid_t pid;
+
+				if ((pid = fork()) == -1)
+					err(1, "fork failed");
+				else if (pid == 0) {
+					execlp("sort", "sort", "-o", outfile,
+					    outfile, NULL);
+					err(1, "exec of sort failed");
+				}
+				/* Just assume the sort went OK. The old code
+				   did not do any checks either. */
+				(void)wait(NULL);
 			}
 		}
 	}
-#ifdef __APPLE__
 	if (ferror(stdout) != 0 || fflush(stdout) != 0)
 		err(1, "stdout");
-#endif
 	exit(exit_val);
+}
+
+static void
+usage(void)
+{
+	(void)fprintf(stderr, "usage: ctags [-BFTaduwvx] [-f tagsfile] file ...\n");
+	exit(1);
 }
 
 /*
  * init --
- *	this routine sets up the boolean psuedo-functions which work by
+ *	this routine sets up the boolean pseudo-functions which work by
  *	setting boolean flags dependent upon the corresponding character.
  *	Every char which is NOT in that string is false with respect to
  *	the pseudo-function.  Therefore, all of the array "_wht" is NO
@@ -200,28 +260,28 @@ usage:		(void)fprintf(stderr,
  *	the string CWHITE, else NO.
  */
 void
-init()
+init(void)
 {
 	int		i;
-	unsigned char	*sp;
+	const char	*sp;
 
 	for (i = 0; i < 256; i++) {
 		_wht[i] = _etk[i] = _itk[i] = _btk[i] = NO;
 		_gd[i] = YES;
 	}
-#define	CWHITE	(unsigned char *)" \f\t\n"
+#define	CWHITE	" \f\t\n"
 	for (sp = CWHITE; *sp; sp++)	/* white space chars */
 		_wht[*sp] = YES;
-#define	CTOKEN	(unsigned char *)" \t\n\"'#()[]{}=-+%*/&|^~!<>;,.:?"
+#define	CTOKEN	" \t\n\"'#()[]{}=-+%*/&|^~!<>;,.:?"
 	for (sp = CTOKEN; *sp; sp++)	/* token ending chars */
 		_etk[*sp] = YES;
-#define	CINTOK	(unsigned char *)"ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz0123456789"
+#define	CINTOK	"ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz0123456789"
 	for (sp = CINTOK; *sp; sp++)	/* valid in-token chars */
 		_itk[*sp] = YES;
-#define	CBEGIN	(unsigned char *)"ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz"
+#define	CBEGIN	"ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz"
 	for (sp = CBEGIN; *sp; sp++)	/* token starting chars */
 		_btk[*sp] = YES;
-#define	CNOTGD	(unsigned char *)",;"
+#define	CNOTGD	",;"
 	for (sp = CNOTGD; *sp; sp++)	/* invalid after-function chars */
 		_gd[*sp] = NO;
 }
@@ -232,13 +292,12 @@ init()
  *	which searches the file.
  */
 void
-find_entries(file)
-	char	*file;
+find_entries(char *file)
 {
 	char	*cp;
 
 	lineno = 0;				/* should be 1 ?? KB */
-	if ((cp = strrchr(file, '.')) != NULL) {
+	if ((cp = strrchr(file, '.'))) {
 		if (cp[1] == 'l' && !cp[2]) {
 			int	c;
 

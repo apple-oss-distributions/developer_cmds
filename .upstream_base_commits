@@ -1,0 +1,12 @@
+#freebsd = https://git.freebsd.org/src.git
+
+ctags/C.c	freebsd	usr.bin/ctags/C.c	7ba6119e22b54c2104b1948f0e8a4157d4112958
+ctags/ctags.1	freebsd	usr.bin/ctags/ctags.1	430d064ba5b0cb2e91a26af34c15df48d290e417
+ctags/ctags.c	freebsd	usr.bin/ctags/ctags.c	430d064ba5b0cb2e91a26af34c15df48d290e417
+ctags/ctags.h	freebsd	usr.bin/ctags/ctags.h	8a16b7a18f5d0b031f09832fd7752fba717e2a97
+ctags/fortran.c	freebsd	usr.bin/ctags/fortran.c	8a16b7a18f5d0b031f09832fd7752fba717e2a97
+ctags/lisp.c	freebsd	usr.bin/ctags/lisp.c	8a16b7a18f5d0b031f09832fd7752fba717e2a97
+ctags/print.c	freebsd	usr.bin/ctags/print.c	8a16b7a18f5d0b031f09832fd7752fba717e2a97
+ctags/tree.c	freebsd	usr.bin/ctags/tree.c	8a16b7a18f5d0b031f09832fd7752fba717e2a97
+ctags/yacc.c	freebsd	usr.bin/ctags/yacc.c	8a16b7a18f5d0b031f09832fd7752fba717e2a97
+ctags/test/ctags.test	freebsd	usr.bin/ctags/test/ctags.test	9b50d9027575220cb6dd09b3e62f03f511e908b8

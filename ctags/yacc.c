@@ -1,6 +1,6 @@
-/*	$NetBSD: yacc.c,v 1.4 1997/10/18 13:19:04 lukem Exp $	*/
-
-/*
+/*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
  * Copyright (c) 1987, 1993, 1994
  *	The Regents of the University of California.  All rights reserved.
  *
@@ -12,11 +12,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -33,19 +29,18 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-#ifndef lint
 #if 0
+#ifndef lint
 static char sccsid[] = "@(#)yacc.c	8.3 (Berkeley) 4/2/94";
-#else
-__RCSID("$NetBSD: yacc.c,v 1.4 1997/10/18 13:19:04 lukem Exp $");
 #endif
-#endif /* not lint */
+#endif
+
+#include <sys/cdefs.h>
+__FBSDID("$FreeBSD$");
 
 #include <ctype.h>
 #include <limits.h>
 #include <stdio.h>
-#include <string.h>
 
 #include "ctags.h"
 
@@ -54,7 +49,7 @@ __RCSID("$NetBSD: yacc.c,v 1.4 1997/10/18 13:19:04 lukem Exp $");
  *	find the yacc tags and put them in.
  */
 void
-y_entries()
+y_entries(void)
 {
 	int	c;
 	char	*sp;
@@ -88,8 +83,8 @@ y_entries()
 			(void)ungetc(c, inf);
 			break;
 		case '/':
-			if (GETC(==, '*'))
-				skip_comment();
+			if (GETC(==, '*') || c == '/')
+				skip_comment(c);
 			else
 				(void)ungetc(c, inf);
 			break;
@@ -105,7 +100,7 @@ y_entries()
 			while (GETC(!=, EOF) && (intoken(c) || c == '.'))
 				*sp++ = c;
 			*sp = EOS;
-			ct_getline();		/* may change before ':' */
+			get_line();		/* may change before ':' */
 			while (iswhite(c)) {
 				if (c == '\n')
 					SETLINE;
@@ -126,7 +121,7 @@ y_entries()
  *	throw away lines up to the next "\n%%\n"
  */
 void
-toss_yysec()
+toss_yysec(void)
 {
 	int	c;			/* read character */
 	int	state;
@@ -135,7 +130,7 @@ toss_yysec()
 	 * state == 0 : waiting
 	 * state == 1 : received a newline
 	 * state == 2 : received first %
-	 * state == 3 : recieved second %
+	 * state == 3 : received second %
 	 */
 	lineftell = ftell(inf);
 	for (state = 0; GETC(!=, EOF);)
