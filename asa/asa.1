@@ -1,4 +1,4 @@
-.\"	$NetBSD: asa.1,v 1.5 1997/09/20 14:55:00 lukem Exp $
+.\"	$NetBSD: asa.1,v 1.11 2002/02/08 01:36:18 ross Exp $
 .\"
 .\" Copyright (c) 1993 Winning Strategies, Inc.
 .\" All rights reserved.
@@ -28,12 +28,14 @@
 .\" (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 .\" THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .\"
-.Dd September 23, 1993
+.\" $FreeBSD$
+.\"
+.Dd May 9, 2002
 .Dt ASA 1
 .Os
 .Sh NAME
 .Nm asa
-.Nd interpret carriage-control characters.
+.Nd interpret carriage-control characters
 .Sh SYNOPSIS
 .Nm
 .Op Ar
@@ -46,40 +48,51 @@ carriage-control characters to line-printer control sequences,
 and writes them to the standard output.
 .Pp
 The first character of each line is interpreted as a carriage-control
-character.  The following characters are interpreted as follows:
-.Bl -tag -width "<space>"
-.It <space>
+character.
+The following characters are interpreted as follows:
+.Bl -tag -width ".Aq space"
+.It Aq space
 Output the rest of the line without change.
 .It 0
-Output a <newline> character before printing the rest of the line.
+Output a
+.Aq newline
+character before printing the rest of the line.
 .It 1
-Output a <formfeed> character before printing the rest of the line.
-.It +
-The trailing <newline> of the previous line is replaced by a <carriage-return>
+Output a
+.Aq formfeed
+character before printing the rest of the line.
+.It \&+
+The trailing
+.Aq newline
+of the previous line is replaced by a
+.Aq carriage-return
 before printing the rest of the line.
 .El
 .Pp
 Lines beginning with characters other than the above are treated as if they
-begin with <space>.
+begin with
+.Aq space .
+.Sh EXIT STATUS
+.Ex -std
 .Sh EXAMPLES
 To view a file containing the output of a
-.Tn FORTRAN program:
-.Dl asa file
+.Tn FORTRAN
+program:
+.Pp
+.Dl "asa file"
 .Pp
 To format the output of a
 .Tn FORTRAN
-program and redirect it to a line-printer.
-.Dl a.out | asa | lpr
-.Sh DIAGNOSTICS
-The
-.Nm
-utility exit 0 on success, and >0 if an error occurs.
+program and redirect it to a line-printer:
+.Pp
+.Dl "a.out | asa | lpr"
 .Sh SEE ALSO
 .Xr f77 1
 .Sh STANDARDS
 The
 .Nm
 utility conforms to
-.St -p1003.2-92 .
+.St -p1003.1-2001 .
 .Sh AUTHORS
-J.T. Conklin, Winning Strategies, Inc.
+.An J.T. Conklin ,
+Winning Strategies, Inc.

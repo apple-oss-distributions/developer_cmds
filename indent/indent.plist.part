@@ -1,0 +1,13 @@
+<dict>
+	<key>OpenSourceProject</key>
+	<string>indent</string>
+	<key>OpenSourceVersion</key>
+	<string>2023-06-29</string>
+	<key>OpenSourceWebsiteURL</key>
+	<string>https://cgit.freebsd.org/src/commit/usr.bin/indent?id=b5b9eaa96274a9c40b06999cadc777c8aeb71d09</string>
+	<key>OpenSourceImportDate</key>
+	<string>2023-06-29</string>
+	<key>OpenSourceLicense</key>
+	<string>BSD</string>
+</dict>
+

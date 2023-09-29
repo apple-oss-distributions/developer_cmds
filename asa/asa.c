@@ -1,6 +1,8 @@
 /*	$NetBSD: asa.c,v 1.11 1997/09/20 14:55:00 lukem Exp $	*/
 
-/*
+/*-
+ * SPDX-License-Identifier: BSD-4-Clause
+ *
  * Copyright (c) 1993,94 Winning Strategies, Inc.
  * All rights reserved.
  *
@@ -31,74 +33,94 @@
  */
 
 #include <sys/cdefs.h>
+#if 0
 #ifndef lint
 __RCSID("$NetBSD: asa.c,v 1.11 1997/09/20 14:55:00 lukem Exp $");
 #endif
+#endif
+__FBSDID("$FreeBSD$");
 
 #include <err.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
-static void asa __P((FILE *));
-int main __P((int, char *[]));
+static void asa(FILE *);
+static void usage(void);
 
-int main(int argc, char **argv)
+int
+main(int argc, char *argv[])
 {
+	int ch, exval;
 	FILE *fp;
-	int exit_val = 0;
-	/* skip progname */
-	argv++;
+	const char *fn;
 
-	if (*argv && !strcmp(*argv, "--")) {
-		argv++;
-		argc--;
+	while ((ch = getopt(argc, argv, "")) != -1) {
+		switch (ch) {
+		case '?':
+		default:
+			usage();
+			/*NOTREACHED*/
+		}
 	}
+	argc -= optind;
+	argv += optind;
 
-	if (argc == 1) {
+	exval = 0;
+	if (argc == 0)
 		asa(stdin);
-		exit(exit_val);
+	else {
+		while ((fn = *argv++) != NULL) {
+			if (strcmp(fn, "-") == 0) {
+				asa(stdin);
+			} else {
+				if ((fp = fopen(fn, "r")) == NULL) {
+					warn("%s", fn);
+					exval = 1;
+					continue;
+				}
+				asa(fp);
+				fclose(fp);
+			}
+		}
 	}
 
-        do {
-                if (*argv) {
-                        if (!(fp = fopen(*argv, "r"))) {
-				warn ("%s", *argv);
-				exit_val = 1;
-				continue;
-                        } else {
-				asa(fp);
-				(void)fclose(fp);
-			}
-                }
-        } while (*argv++);
+	if (fflush(stdout) != 0)
+		err(1, "stdout");
 
-	exit (exit_val);
+	exit(exval);
 }
 
 static void
-asa(f)
-	FILE *f;
+usage(void)
 {
-	char *buf;
-	size_t len;
 
-	if ((buf = fgetln (f, &len)) != NULL) {
+	fprintf(stderr, "usage: asa [file ...]\n");
+	exit(1);
+}
+
+static void
+asa(FILE *f)
+{
+	size_t len;
+	char *buf;
+
+	if ((buf = fgetln(f, &len)) != NULL) {
 		if (buf[len - 1] == '\n')
 			buf[--len] = '\0';
-		/* special case the first line  */
+		/* special case the first line */
 		switch (buf[0]) {
 		case '0':
-			putchar ('\n');
+			putchar('\n');
 			break;
 		case '1':
-			putchar ('\f');
+			putchar('\f');
 			break;
 		}
 
-		if (len > 1 && buf[0] && buf[1]) {
+		if (len > 1 && buf[0] && buf[1])
 			printf("%.*s", (int)(len - 1), buf + 1);
-		}
 
 		while ((buf = fgetln(f, &len)) != NULL) {
 			if (buf[len - 1] == '\n')
@@ -106,26 +128,27 @@ asa(f)
 			switch (buf[0]) {
 			default:
 			case ' ':
-				putchar ('\n');
+				putchar('\n');
 				break;
 			case '0':
-				putchar ('\n');
-				putchar ('\n');
+				putchar('\n');
+				putchar('\n');
 				break;
 			case '1':
-				putchar ('\n');
-				putchar ('\f');
+				putchar('\f');
 				break;
 			case '+':
-				putchar ('\r');
+				putchar('\r');
 				break;
 			}
 
-			if (len > 1 && buf[0] && buf[1]) {
+			if (len > 1 && buf[0] && buf[1])
 				printf("%.*s", (int)(len - 1), buf + 1);
-			}
 		}
 
-		putchar ('\n');
+		putchar('\n');
 	}
+
+	if (ferror(stdout) != 0)
+		err(1, "stdout");
 }

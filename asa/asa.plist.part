@@ -1,0 +1,15 @@
+<dict>
+	<key>OpenSourceProject</key>
+	<string>asa</string>
+	<key>OpenSourceVersion</key>
+	<string>2023-06-15</string>
+	<key>OpenSourceWebsiteURL</key>
+	<string>https://cgit.freebsd.org/src/tree/usr.bin/asa?id=b7412da2e122d9274341ef840c6918409bc523b3</string>
+	<key>OpenSourceImportDate</key>
+	<string>2023-06-15</string>
+	<key>OpenSourceLicense</key>
+	<string>BSD</string>
+	<key>OpenSourceModifications</key>
+	<array>
+	</array>
+</dict>

@@ -11,6 +11,8 @@
 			isa = PBXAggregateTarget;
 			buildConfigurationList = FDA9C85E0FD5E86100A6EA6E /* Build configuration list for PBXAggregateTarget "default" */;
 			buildPhases = (
+				CB6D0E262A405983003AE6ED /* Install Open Source Info */,
+				CB6CF5402A3B4659001F1D3B /* Install Test Files */,
 			);
 			dependencies = (
 				FDA9C8590FD5E85C00A6EA6E /* PBXTargetDependency */,
@@ -38,6 +40,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		CB6CF5422A3B9EF0001F1D3B /* asa_test.sh in Copy Test Files */ = {isa = PBXBuildFile; fileRef = CB6CF5412A3B9EE9001F1D3B /* asa_test.sh */; };
 		FDA9C83F0FD5E7E300A6EA6E /* asa.c in Sources */ = {isa = PBXBuildFile; fileRef = FDA9C7E40FD5D90F00A6EA6E /* asa.c */; };
 		FDA9C84D0FD5E82800A6EA6E /* asa.1 in Install man1 */ = {isa = PBXBuildFile; fileRef = FDA9C7E30FD5D90F00A6EA6E /* asa.1 */; };
 		FDA9C85F0FD5E87200A6EA6E /* C.c in Sources */ = {isa = PBXBuildFile; fileRef = FDA9C7E70FD5D92800A6EA6E /* C.c */; };
@@ -117,6 +120,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		CB6CF53C2A3B34DB001F1D3B /* Copy Test Files */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 8;
+			dstPath = /AppleInternal/Tests/developer_cmds/asa;
+			dstSubfolderSpec = 0;
+			files = (
+				CB6CF5422A3B9EF0001F1D3B /* asa_test.sh in Copy Test Files */,
+			);
+			name = "Copy Test Files";
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 		FDA9C84F0FD5E82D00A6EA6E /* Install man1 */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 8;
@@ -186,6 +200,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		CB6CF5412A3B9EE9001F1D3B /* asa_test.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = asa_test.sh; path = tests/asa_test.sh; sourceTree = "<group>"; };
 		FDA9C7E30FD5D90F00A6EA6E /* asa.1 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.man; path = asa.1; sourceTree = "<group>"; };
 		FDA9C7E40FD5D90F00A6EA6E /* asa.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = asa.c; sourceTree = "<group>"; };
 		FDA9C7E70FD5D92800A6EA6E /* C.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = C.c; sourceTree = "<group>"; };
@@ -273,6 +288,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CB6CF53D2A3B34FE001F1D3B /* tests */ = {
+			isa = PBXGroup;
+			children = (
+				CB6CF5412A3B9EE9001F1D3B /* asa_test.sh */,
+			);
+			name = tests;
+			sourceTree = "<group>";
+		};
 		FDA9C7D50FD5D84000A6EA6E = {
 			isa = PBXGroup;
 			children = (
@@ -286,6 +309,7 @@
 			children = (
 				FDA9C7E30FD5D90F00A6EA6E /* asa.1 */,
 				FDA9C7E40FD5D90F00A6EA6E /* asa.c */,
+				CB6CF53D2A3B34FE001F1D3B /* tests */,
 			);
 			path = asa;
 			sourceTree = "<group>";
@@ -407,6 +431,7 @@
 				FDA9C8370FD5E7DB00A6EA6E /* Sources */,
 				FDA9C8380FD5E7DB00A6EA6E /* Frameworks */,
 				FDA9C84F0FD5E82D00A6EA6E /* Install man1 */,
+				CB6CF53C2A3B34DB001F1D3B /* Copy Test Files */,
 			);
 			buildRules = (
 			);
@@ -517,6 +542,44 @@
 /* End PBXProject section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		CB6CF5402A3B4659001F1D3B /* Install Test Files */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Install Test Files";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = ". \"$PROJECT_DIR\"/xcodescripts/install-test-files.sh\n";
+			showEnvVarsInLog = 0;
+		};
+		CB6D0E262A405983003AE6ED /* Install Open Source Info */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Install Open Source Info";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = ". \"$PROJECT_DIR\"/xcodescripts/install-opensource.sh\n";
+			showEnvVarsInLog = 0;
+		};
 		FDA9C9080FD5EC7500A6EA6E /* Install unifdefall */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 8;
