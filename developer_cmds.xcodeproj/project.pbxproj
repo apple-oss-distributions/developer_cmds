@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 42;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -517,12 +517,14 @@
 		FDA9C7D70FD5D84000A6EA6E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 			};
 			buildConfigurationList = FDA9C7DA0FD5D84000A6EA6E /* Build configuration list for PBXProject "developer_cmds" */;
 			compatibilityVersion = "Xcode 2.4";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = FDA9C7D50FD5D84000A6EA6E;
@@ -550,11 +552,15 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
+				"$(SRCROOT)/indent/tests/functional_test.sh",
+				"$(SRCROOT)/tests/developer_cmds.plist.in",
 			);
 			name = "Install Test Files";
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"$(DSTROOT)/AppleInternal/CoreOS/BATS/unit_tests/developer_cmds.plist",
+				"($DSTROOT)/AppleInternal/Tests/developer_cmds/indent/indent_test.sh",
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
@@ -569,11 +575,14 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
+				"$(PROJECT_DIR)/indent/indent.plist.part",
+				"$(PROJECT_DIR)/asa/asa.plist.part",
 			);
 			name = "Install Open Source Info";
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"$(DSTROOT)/usr/local/OpenSourceVersions/developer_cmds.plist",
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
@@ -586,13 +595,18 @@
 			files = (
 			);
 			inputPaths = (
+				"$(PROJECT_DIR)/unifdef/unifdefall.sh",
+				"$(DSTROOT)/$(DT_TOOLCHAIN_DIR)/usr/share/man/man1/unifdef.1",
+				"",
 			);
 			name = "Install unifdefall";
 			outputPaths = (
+				"$(DSTROOT)/$(DT_TOOLCHAIN_DIR)/usr/bin/unifdefall",
+				"$(DSTROOT)/$(DT_TOOLCHAIN_DIR)/usr/share/man/man1/unifdef.1",
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = ". \"$PROJECT_DIR\"/xcodescripts/install-unifdefall.sh";
+			shellScript = ". \"$PROJECT_DIR\"/xcodescripts/install-unifdefall.sh\n";
 			showEnvVarsInLog = 0;
 		};
 		FDA9C97E0FD5F05400A6EA6E /* ShellScript */ = {
@@ -601,12 +615,14 @@
 			files = (
 			);
 			inputPaths = (
+				"$(PROJECT_DIR)/lorder/lorder.sh",
 			);
 			outputPaths = (
+				"$(DSTROOT)/$(DT_TOOLCHAIN_DIR)/usr/bin/lorder",
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = ". \"$PROJECT_DIR\"/xcodescripts/install-lorder.sh";
+			shellScript = ". \"$PROJECT_DIR\"/xcodescripts/install-lorder.sh\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

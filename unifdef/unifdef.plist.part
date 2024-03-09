@@ -1,12 +1,12 @@
 <dict>
 	<key>OpenSourceProject</key>
-	<string>asa</string>
+	<string>unifdef</string>
 	<key>OpenSourceVersion</key>
-	<string>2024-01-09</string>
+	<string>2023-09-06</string>
 	<key>OpenSourceWebsiteURL</key>
-	<string>https://cgit.freebsd.org/src/tree/usr.bin/asa?id=c2356a440db91c106867d45c94b3d6d7bc0e50f0</string>
+	<string>https://cgit.freebsd.org/src/tree/contrib/unifdef?id=aacbe7384221d2eafa326864bbbe2f22a10063ce</string>
 	<key>OpenSourceImportDate</key>
-	<string>2023-01-09</string>
+	<string>2023-09-06</string>
 	<key>OpenSourceLicense</key>
 	<string>BSD</string>
 	<key>OpenSourceModifications</key>

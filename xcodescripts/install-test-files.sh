@@ -12,6 +12,11 @@ install -m 0755 "$SRCROOT"/indent/tests/functional_test.sh \
 	"$DSTROOT"/AppleInternal/Tests/developer_cmds/indent/indent_test.sh
 
 install -d -m 0755 \
+	"$DSTROOT"/AppleInternal/Tests/developer_cmds/unifdef
+install -m 0755 "$SRCROOT"/unifdef/tests/unifdef_test.sh \
+	"$DSTROOT"/AppleInternal/Tests/developer_cmds/unifdef/unifdef_test.sh
+
+install -d -m 0755 \
 	"$DSTROOT"/AppleInternal/CoreOS/BATS/unit_tests
 
 # The plist will use TARGET_* conditionals to avoid atf-sh tests on !macOS

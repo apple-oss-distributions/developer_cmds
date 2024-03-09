@@ -204,6 +204,33 @@
 		</dict>
 		<dict>
 			<key>TestName</key>
+			<string>developer_cmds.asa_test.sh.unterminated</string>
+			<key>ShellEnv</key>
+			<dict>
+				<key>ATF_SH</key>
+				<string>/usr/local/bin/atf-sh</string>
+				<key>__RUNNING_INSIDE_ATF_RUN</key>
+				<string>internal-yes-value</string>
+			</dict>
+			<key>Command</key>
+			<array>
+				<string>/usr/local/bin/atf-sh</string>
+				<string>/AppleInternal/Tests/developer_cmds/asa/asa_test.sh</string>
+				<string>-s</string>
+				<string>/AppleInternal/Tests/developer_cmds/asa</string>
+				<string>-r</string>
+				<string>asa_test.sh.unterminated.results.txt</string>
+				<string>unterminated</string>
+			</array>
+			<key>Description</key>
+			<string>Unterminated input</string>
+			<key>MayRunConcurrently</key>
+			<true/>
+			<key>Timeout</key>
+			<integer>300</integer>
+		</dict>
+		<dict>
+			<key>TestName</key>
 			<string>developer_cmds.ident_test.sh.binary</string>
 			<key>ShellEnv</key>
 			<dict>
@@ -647,6 +674,60 @@
 				<string>ident_test.sh.wchar.results.txt</string>
 				<string>wchar</string>
 			</array>
+			<key>MayRunConcurrently</key>
+			<true/>
+			<key>Timeout</key>
+			<integer>300</integer>
+		</dict>
+		<dict>
+			<key>TestName</key>
+			<string>developer_cmds.unifdef_test.sh.hash_comment</string>
+			<key>ShellEnv</key>
+			<dict>
+				<key>ATF_SH</key>
+				<string>/usr/local/bin/atf-sh</string>
+				<key>__RUNNING_INSIDE_ATF_RUN</key>
+				<string>internal-yes-value</string>
+			</dict>
+			<key>Command</key>
+			<array>
+				<string>/usr/local/bin/atf-sh</string>
+				<string>/AppleInternal/Tests/developer_cmds/unifdef/unifdef_test.sh</string>
+				<string>-s</string>
+				<string>/AppleInternal/Tests/developer_cmds/unifdef</string>
+				<string>-r</string>
+				<string>unifdef_test.sh.hash_comment.results.txt</string>
+				<string>hash_comment</string>
+			</array>
+			<key>Description</key>
+			<string>multiline comment follows directive</string>
+			<key>MayRunConcurrently</key>
+			<true/>
+			<key>Timeout</key>
+			<integer>300</integer>
+		</dict>
+		<dict>
+			<key>TestName</key>
+			<string>developer_cmds.unifdef_test.sh.redefine</string>
+			<key>ShellEnv</key>
+			<dict>
+				<key>ATF_SH</key>
+				<string>/usr/local/bin/atf-sh</string>
+				<key>__RUNNING_INSIDE_ATF_RUN</key>
+				<string>internal-yes-value</string>
+			</dict>
+			<key>Command</key>
+			<array>
+				<string>/usr/local/bin/atf-sh</string>
+				<string>/AppleInternal/Tests/developer_cmds/unifdef/unifdef_test.sh</string>
+				<string>-s</string>
+				<string>/AppleInternal/Tests/developer_cmds/unifdef</string>
+				<string>-r</string>
+				<string>unifdef_test.sh.redefine.results.txt</string>
+				<string>redefine</string>
+			</array>
+			<key>Description</key>
+			<string>redefine the same symbol</string>
 			<key>MayRunConcurrently</key>
 			<true/>
 			<key>Timeout</key>

@@ -1,8 +1,8 @@
 #freebsd = https://git.freebsd.org/src.git
 
-asa/asa.1	freebsd	usr.bin/asa/asa.1	a866e170777b42fd7921eadd6e7e664f3a031d60
-asa/asa.c	freebsd	usr.bin/asa/asa.c	f08f90e6987775f88d25efbd8762c361819f40ba
-asa/tests/asa_test.sh	freebsd	usr.bin/asa/tests/asa_test.sh	b7412da2e122d9274341ef840c6918409bc523b3
+asa/asa.1	freebsd	usr.bin/asa/asa.1	fa9896e082a1046ff4fbc75fcba4d18d1f2efc19
+asa/asa.c	freebsd	usr.bin/asa/asa.c	c2356a440db91c106867d45c94b3d6d7bc0e50f0
+asa/tests/asa_test.sh	freebsd	usr.bin/asa/tests/asa_test.sh	c2356a440db91c106867d45c94b3d6d7bc0e50f0
 
 ctags/C.c	freebsd	usr.bin/ctags/C.c	7ba6119e22b54c2104b1948f0e8a4157d4112958
 ctags/ctags.1	freebsd	usr.bin/ctags/ctags.1	430d064ba5b0cb2e91a26af34c15df48d290e417
@@ -75,6 +75,10 @@ indent/tests/types_from_file.0.stdout	freebsd	usr.bin/indent/tests/types_from_fi
 indent/tests/wchar.0	freebsd	usr.bin/indent/tests/wchar.0	61fd3be0b0fb9df04ea6ac47d552ceaff0a75aa6
 indent/tests/wchar.0.stdout	freebsd	usr.bin/indent/tests/wchar.0.stdout	61fd3be0b0fb9df04ea6ac47d552ceaff0a75aa6
 
-unifdef/unifdef.1	freebsd	usr.bin/unifdef/unifdef.1	ff9923c8690c28a555c0b90b1b30fd94d33eb7e5
-unifdef/unifdef.c	freebsd	usr.bin/unifdef/unifdef.c	9bbfc2e6462efa548f2e42fb52ad3bc734b7cfcb
-unifdef/unifdefall.sh	freebsd	usr.bin/unifdef/unifdefall.sh	3548be4a24da5adf3c3825f521b58caf1479c28a
+unifdef/tree.h	freebsd	sys/sys/tree.h	71625ec9ad2a9bc8c09784fbd23b759830e0ee5f
+unifdef/unifdef.1	freebsd	contrib/unifdef/unifdef.1	049b7608f41bf4e93ac6de718c45bef261f6977d
+unifdef/unifdef.c	freebsd	contrib/unifdef/unifdef.c	aacbe7384221d2eafa326864bbbe2f22a10063ce
+unifdef/unifdef.h	freebsd	contrib/unifdef/unifdef.h	343b776fd0280f4dc95a1a61fd9ac40c78ce684e
+unifdef/unifdefall.sh	freebsd	contrib/unifdef/unifdefall.sh	fb3ef04d2028110f06d68b09009f1f2ca0f4128e
+unifdef/version.h	freebsd	contrib/unifdef/version.h	fb3ef04d2028110f06d68b09009f1f2ca0f4128e
+unifdef/tests/unifdef_test.sh	freebsd	usr.bin/unifdef/tests/unifdef_test.sh	aacbe7384221d2eafa326864bbbe2f22a10063ce
