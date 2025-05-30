@@ -1,7 +1,7 @@
 #!/bin/sh
 # Generate and install open source plist
 
-set -e
+set -ex
 
 OSV="$DSTROOT"/usr/local/OpenSourceVersions
 install -m 0755 -d "$OSV"

@@ -92,7 +92,6 @@ static char *cmdname;
 static char *svcclosetime = "120";
 static char *CPP = "/usr/bin/cpp";
 static char CPPFLAGS[] = "-C";
-static char pathbuf[MAXPATHLEN + 1];
 static char *allv[] = {
 	"rpcgen", "-s", "udp", "-s", "tcp",
 };
@@ -1061,9 +1060,7 @@ parseargs(argc, argv, cmd)
 					if (++i == argc) {
 						return (0);
 					}
-					(void) strcpy(pathbuf, argv[i]);
-					(void) strcat(pathbuf, "/cpp");
-					CPP = pathbuf;
+					(void) asprintf(&CPP, "%s/cpp", argv[i]);
 					cppDefined = 1;
 					goto nextarg;
 

@@ -1,3 +1,5 @@
+#!/bin/sh
+
 set -ex
 
 BINDIR="$DSTROOT"/"$DT_TOOLCHAIN_DIR"/usr/bin

@@ -1,0 +1,15 @@
+<dict>
+	<key>OpenSourceProject</key>
+	<string>lorder</string>
+	<key>OpenSourceVersion</key>
+	<string>2024-02-29</string>
+	<key>OpenSourceWebsiteURL</key>
+	<string>https://cgit.freebsd.org/src/tree/usr.bin/lorder?id=aa80cfadff0bb715ca090cbd1b3561a1619251d5</string>
+	<key>OpenSourceImportDate</key>
+	<string>2024-02-29</string>
+	<key>OpenSourceLicense</key>
+	<string>BSD</string>
+	<key>OpenSourceModifications</key>
+	<array>
+	</array>
+</dict>

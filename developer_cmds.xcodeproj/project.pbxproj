@@ -31,6 +31,7 @@
 			buildPhases = (
 				FDA9C97E0FD5F05400A6EA6E /* ShellScript */,
 				FDA9C9A20FD5F12200A6EA6E /* Install man1 */,
+				CB574BAE2B8F9CA500DC7F4F /* Install Test Files */,
 			);
 			dependencies = (
 			);
@@ -40,7 +41,10 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		CB574BB12B8F9CF400DC7F4F /* lorder_test.sh in Install Test Files */ = {isa = PBXBuildFile; fileRef = CB574BB02B8F9CF200DC7F4F /* lorder_test.sh */; };
+		CB6671B62D4BC52A0014AE35 /* unifdef_test.sh in Copy Test Files */ = {isa = PBXBuildFile; fileRef = CB6671B52D4BC5270014AE35 /* unifdef_test.sh */; };
 		CB6CF5422A3B9EF0001F1D3B /* asa_test.sh in Copy Test Files */ = {isa = PBXBuildFile; fileRef = CB6CF5412A3B9EE9001F1D3B /* asa_test.sh */; };
+		CBB1A5EB2DE729A5003DE5D5 /* rpcgen_test.sh in Copy Test Files */ = {isa = PBXBuildFile; fileRef = CBB1A5E92DE7297C003DE5D5 /* rpcgen_test.sh */; };
 		FDA9C83F0FD5E7E300A6EA6E /* asa.c in Sources */ = {isa = PBXBuildFile; fileRef = FDA9C7E40FD5D90F00A6EA6E /* asa.c */; };
 		FDA9C84D0FD5E82800A6EA6E /* asa.1 in Install man1 */ = {isa = PBXBuildFile; fileRef = FDA9C7E30FD5D90F00A6EA6E /* asa.1 */; };
 		FDA9C85F0FD5E87200A6EA6E /* C.c in Sources */ = {isa = PBXBuildFile; fileRef = FDA9C7E70FD5D92800A6EA6E /* C.c */; };
@@ -120,6 +124,28 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		CB574BAE2B8F9CA500DC7F4F /* Install Test Files */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 8;
+			dstPath = /AppleInternal/Tests/developer_cmds/lorder;
+			dstSubfolderSpec = 0;
+			files = (
+				CB574BB12B8F9CF400DC7F4F /* lorder_test.sh in Install Test Files */,
+			);
+			name = "Install Test Files";
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		CB6671B02D4BC4930014AE35 /* Copy Test Files */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 8;
+			dstPath = /AppleInternal/Tests/developer_cmds/unifdef;
+			dstSubfolderSpec = 0;
+			files = (
+				CB6671B62D4BC52A0014AE35 /* unifdef_test.sh in Copy Test Files */,
+			);
+			name = "Copy Test Files";
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 		CB6CF53C2A3B34DB001F1D3B /* Copy Test Files */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 8;
@@ -127,6 +153,17 @@
 			dstSubfolderSpec = 0;
 			files = (
 				CB6CF5422A3B9EF0001F1D3B /* asa_test.sh in Copy Test Files */,
+			);
+			name = "Copy Test Files";
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		CBB1A5EA2DE72996003DE5D5 /* Copy Test Files */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 8;
+			dstPath = /AppleInternal/Tests/developer_cmds/rpcgen;
+			dstSubfolderSpec = 0;
+			files = (
+				CBB1A5EB2DE729A5003DE5D5 /* rpcgen_test.sh in Copy Test Files */,
 			);
 			name = "Copy Test Files";
 			runOnlyForDeploymentPostprocessing = 1;
@@ -200,7 +237,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		CB574BB02B8F9CF200DC7F4F /* lorder_test.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = lorder_test.sh; sourceTree = "<group>"; };
+		CB6671B52D4BC5270014AE35 /* unifdef_test.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = unifdef_test.sh; sourceTree = "<group>"; };
 		CB6CF5412A3B9EE9001F1D3B /* asa_test.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = asa_test.sh; path = tests/asa_test.sh; sourceTree = "<group>"; };
+		CBB1A5E92DE7297C003DE5D5 /* rpcgen_test.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = rpcgen_test.sh; sourceTree = "<group>"; };
 		FDA9C7E30FD5D90F00A6EA6E /* asa.1 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.man; path = asa.1; sourceTree = "<group>"; };
 		FDA9C7E40FD5D90F00A6EA6E /* asa.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = asa.c; sourceTree = "<group>"; };
 		FDA9C7E70FD5D92800A6EA6E /* C.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = C.c; sourceTree = "<group>"; };
@@ -288,12 +328,36 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CB574BAF2B8F9CCA00DC7F4F /* tests */ = {
+			isa = PBXGroup;
+			children = (
+				CB574BB02B8F9CF200DC7F4F /* lorder_test.sh */,
+			);
+			path = tests;
+			sourceTree = "<group>";
+		};
+		CB6671B42D4BC4FD0014AE35 /* tests */ = {
+			isa = PBXGroup;
+			children = (
+				CB6671B52D4BC5270014AE35 /* unifdef_test.sh */,
+			);
+			path = tests;
+			sourceTree = "<group>";
+		};
 		CB6CF53D2A3B34FE001F1D3B /* tests */ = {
 			isa = PBXGroup;
 			children = (
 				CB6CF5412A3B9EE9001F1D3B /* asa_test.sh */,
 			);
 			name = tests;
+			sourceTree = "<group>";
+		};
+		CBB1A5E82DE72965003DE5D5 /* tests */ = {
+			isa = PBXGroup;
+			children = (
+				CBB1A5E92DE7297C003DE5D5 /* rpcgen_test.sh */,
+			);
+			path = tests;
 			sourceTree = "<group>";
 		};
 		FDA9C7D50FD5D84000A6EA6E = {
@@ -359,6 +423,7 @@
 		FDA9C80A0FD5D92800A6EA6E /* lorder */ = {
 			isa = PBXGroup;
 			children = (
+				CB574BAF2B8F9CCA00DC7F4F /* tests */,
 				FDA9C80C0FD5D92800A6EA6E /* lorder.sh */,
 				FDA9C80B0FD5D92800A6EA6E /* lorder.1 */,
 			);
@@ -368,6 +433,7 @@
 		FDA9C8160FD5D92800A6EA6E /* rpcgen */ = {
 			isa = PBXGroup;
 			children = (
+				CBB1A5E82DE72965003DE5D5 /* tests */,
 				FDA9C8180FD5D92800A6EA6E /* rpc_clntout.c */,
 				FDA9C8190FD5D92800A6EA6E /* rpc_cout.c */,
 				FDA9C81A0FD5D92800A6EA6E /* rpc_hout.c */,
@@ -392,6 +458,7 @@
 				FDA9C8290FD5D92800A6EA6E /* unifdef.c */,
 				FDA9C8280FD5D92800A6EA6E /* unifdef.1 */,
 				FDA9C82A0FD5D92800A6EA6E /* unifdefall.sh */,
+				CB6671B42D4BC4FD0014AE35 /* tests */,
 			);
 			path = unifdef;
 			sourceTree = "<group>";
@@ -483,6 +550,7 @@
 				FDA9C8D30FD5EBA400A6EA6E /* Sources */,
 				FDA9C8D40FD5EBA400A6EA6E /* Frameworks */,
 				FDA9C8F40FD5EC0F00A6EA6E /* Install man1 */,
+				CBB1A5EA2DE72996003DE5D5 /* Copy Test Files */,
 			);
 			buildRules = (
 			);
@@ -501,6 +569,7 @@
 				FDA9C8F60FD5EC2A00A6EA6E /* Frameworks */,
 				FDA9C9040FD5EC6800A6EA6E /* Install man1 */,
 				FDA9C9080FD5EC7500A6EA6E /* Install unifdefall */,
+				CB6671B02D4BC4930014AE35 /* Copy Test Files */,
 			);
 			buildRules = (
 			);
@@ -560,7 +629,7 @@
 			);
 			outputPaths = (
 				"$(DSTROOT)/AppleInternal/CoreOS/BATS/unit_tests/developer_cmds.plist",
-				"($DSTROOT)/AppleInternal/Tests/developer_cmds/indent/indent_test.sh",
+				"$(DSTROOT)/AppleInternal/Tests/developer_cmds/indent/indent_test.sh",
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;

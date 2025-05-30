@@ -1,5 +1,6 @@
 #!/bin/sh -
-#	$NetBSD: lorder.sh,v 1.7 1998/04/09 05:28:07 fair Exp $
+#
+# SPDX-License-Identifier: BSD-3-Clause
 #
 # Copyright (c) 1990, 1993
 #	The Regents of the University of California.  All rights reserved.
@@ -12,11 +13,7 @@
 # 2. Redistributions in binary form must reproduce the above copyright
 #    notice, this list of conditions and the following disclaimer in the
 #    documentation and/or other materials provided with the distribution.
-# 3. All advertising materials mentioning features or use of this software
-#    must display the following acknowledgement:
-#	This product includes software developed by the University of
-#	California, Berkeley and its contributors.
-# 4. Neither the name of the University nor the names of its contributors
+# 3. Neither the name of the University nor the names of its contributors
 #    may be used to endorse or promote products derived from this software
 #    without specific prior written permission.
 #
@@ -31,61 +28,53 @@
 # LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
-#
-#	@(#)lorder.sh	8.1 (Berkeley) 6/6/93
-#
 
-# If the user has set ${NM} then we use it, otherwise we use 'nm'.
-# We try to find the compiler in the user's path, and if that fails we
-# try to find it in the default path.  If we can't find it, we punt.
-# Once we find it, we canonicalize its name and set the path to the
-# default path so that other commands we use are picked properly.
+export LC_CTYPE=C
+export LC_COLLATE=C
+set -e
 
-if ! type "${NM:=nm}" > /dev/null 2>&1; then
-        PATH=/bin:/usr/bin
-        export PATH
-        if ! type "${NM}" > /dev/null 2>&1; then
-                echo "lorder: ${NM}: not found"
-                exit 1
-        fi
+usage() {
+	echo "usage: lorder file ..." >&2
+	exit 1
+}
+
+while getopts "" opt ; do
+	case $opt in
+	*)
+		usage
+		;;
+	esac
+done
+shift $(($OPTIND - 1))
+if [ $# -eq 0 ] ; then
+	usage
 fi
-cmd='set `type "${NM}"` ; eval echo \$$#'
-NM=`eval $cmd`
 
-# only one argument is a special case, just output the name twice
-case $# in
-	0)
-		echo "usage: lorder file ...";
-		exit ;;
-	1)
-		echo $1 $1;
-		exit ;;
-esac
-
-# temporary files
-R=/tmp/_reference_$$
-S=/tmp/_symbol_$$
-
-# remove temporary files on HUP, INT, QUIT, PIPE, TERM
-trap "rm -f $R $S; exit 1" 1 2 3 13 15
-
-# if the line ends in a colon, assume it's the first occurrence of a new
-# object file.  Echo it twice, just to make sure it gets into the output.
 #
-# if the line has " T " or " D " it's a globally defined symbol, put it
-# into the symbol file.
+# Create temporary files.
 #
-# if the line has " U " it's a globally undefined symbol, put it into
-# the reference file.
-(for file in $* ; do echo $file":" ; done ; $NM -go $*) | sed "
-	/:$/ {
-		s/://
-		s/.*/& &/
-		p
-		d
-	}
-	/ [TDGR] / {
-		s/:.* [TDGR] / /
+N=$(mktemp -t _nm_)
+R=$(mktemp -t _reference_)
+S=$(mktemp -t _symbol_)
+T=$(mktemp -t _temp_)
+NM=${NM:-nm}
+
+#
+# Remove temporary files on termination.
+#
+trap "rm -f $N $R $S $T" EXIT 1 2 3 13 15
+
+#
+# A line matching " [RTDW] " indicates that the input defines a symbol
+# with external linkage; put it in the symbol file.
+#
+# A line matching " U " indicates that the input references an
+# undefined symbol; put it in the reference file.
+#
+${NM} ${NMFLAGS} -go "$@" >$N
+sed -e "
+	/ [RTDW] / {
+		s/:.* [RTDW] / /
 		w $S
 		d
 	}
@@ -94,11 +83,28 @@ trap "rm -f $R $S; exit 1" 1 2 3 13 15
 		w $R
 	}
 	d
-"
+" <$N
 
-# sort symbols and references on the first field (the symbol)
-# join on that field, and print out the file names.
-sort -k 2 $R -o $R
-sort -k 2 $S -o $S
-join -j 2 -o "1.1 2.1" $R $S
-rm -f $R $S
+#
+# Elide entries representing a reference to a symbol from within the
+# library that defines it.
+#
+sort -u -o $S $S
+sort -u -o $R $R
+comm -23 $R $S >$T
+mv $T $R
+
+#
+# Make sure that all inputs get into the output.
+#
+for i ; do
+	echo "$i" "$i"
+done
+
+#
+# Sort references and symbols on the second field (the symbol), join
+# on that field, and print out the file names.
+#
+sort -k 2 -o $R $R
+sort -k 2 -o $S $S
+join -j 2 -o 1.1 -o 2.1 $R $S

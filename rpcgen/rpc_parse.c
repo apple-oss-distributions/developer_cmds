@@ -487,7 +487,7 @@ get_prog_declaration(dec, dkind, num)
 	int     num;		/* arg number */
 {
 	token   tok;
-	char    name[10];	/* argument name */
+	char    *name;		/* argument name */
 
 	if (dkind == DEF_PROGRAM) {
 		peek(&tok);
@@ -502,12 +502,12 @@ get_prog_declaration(dec, dkind, num)
 	get_type(&dec->prefix, &dec->type, dkind);
 	dec->rel = REL_ALIAS;
 	if (peekscan(TOK_IDENT, &tok))	/* optional name of argument */
-		strcpy(name, tok.str);
+		name = strdup(tok.str);
 	else
-		sprintf(name, "%s%d", ARGNAME, num);	/* default name of
+		asprintf(&name, "%s%d", ARGNAME, num);	/* default name of
 							 * argument */
 
-	dec->name = (char *) strdup(name);
+	dec->name = name;
 
 	if (streq(dec->type, "void")) {
 		return;

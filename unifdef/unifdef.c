@@ -429,19 +429,16 @@ processinout(const char *ifn, const char *ofn)
 	tempname = astrcat(ofn, ".XXXXXX");
 #ifdef __APPLE__
 	const char *tmpdir = getenv("TMPDIR");
-	if (!tmpdir) {
-		tmpdir = _PATH_TMP;
-	}
-
 	char *final_name = NULL;
 	char *outfile_basename = basename(tempname);
 
-	if (-1 == asprintf(&final_name, "%s/%s", tmpdir, outfile_basename)) {
+	if (tmpdir == NULL)
+		tmpdir = _PATH_TMP;
+	if (asprintf(&final_name, "%s/%s", tmpdir, outfile_basename) < 0)
 		err(2, "asprintf");
-	}
 	free(tempname);
 	tempname = final_name;
-#endif
+#endif /* __APPLE__ */
 	output = mktempmode(tempname, st.st_mode);
 	if (output == NULL)
 		err(2, "can't create %s", tempname);
@@ -456,17 +453,15 @@ processinout(const char *ifn, const char *ofn)
 	}
 #ifdef __APPLE__
 	/* alwyas replace the file */
-	if (replace(tempname, ofn) < 0) {
-		err(2, "can't rename \"%s\" to \"%s\"", tempname, ofn);
-	}
-#else
+	if (replace(tempname, ofn) < 0)
+#else /* !__APPLE__ */
 	/* leave file unmodified if unifdef made no changes */
 	if (!altered && backext == NULL) {
 		if (remove(tempname) < 0)
 			warn("can't remove \"%s\"", tempname);
 	} else if (replace(tempname, ofn) < 0)
+#endif /* __APPLE__ */
 		err(2, "can't rename \"%s\" to \"%s\"", tempname, ofn);
-#endif // __APPLE__
 	free(tempname);
 	tempname = NULL;
 }
@@ -1515,7 +1510,7 @@ findsym(const char **strp)
 static void
 indirectsym(void)
 {
-	const char *cp;
+	struct macro key = { 0 };
 	int changed;
 	struct macro *sym, *ind;
 
@@ -1524,10 +1519,9 @@ indirectsym(void)
 		RB_FOREACH(sym, MACROMAP, &macro_tree) {
 			if (sym->value == NULL)
 				continue;
-			cp = sym->value;
-			ind = findsym(&cp);
+			key.name = sym->value;
+			ind = RB_FIND(MACROMAP, &macro_tree, &key);
 			if (ind == NULL || ind == sym ||
-			    *cp != '\0' ||
 			    ind->value == NULL ||
 			    ind->value == sym->value)
 				continue;
@@ -1566,10 +1560,10 @@ addsym1(bool ignorethis, bool definethis, char *symval)
 static void
 addsym2(bool ignorethis, const char *symname, const char *val)
 {
-	const char *cp = symname;
+	struct macro key = { .name = symname };
 	struct macro *sym, *r;
 
-	sym = findsym(&cp);
+	sym = RB_FIND(MACROMAP, &macro_tree, &key);
 	if (sym == NULL) {
 		sym = calloc(1, sizeof(*sym));
 		sym->ignore = ignorethis;

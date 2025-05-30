@@ -1,5 +1,6 @@
 #!/bin/sh
-set -e -x
+
+set -ex
 
 install -d -m 0755 \
 	"$DSTROOT"/AppleInternal/Tests/developer_cmds
@@ -10,11 +11,6 @@ install -m 0644 "$SRCROOT"/indent/tests/*0* \
 	"$DSTROOT"/AppleInternal/Tests/developer_cmds/indent
 install -m 0755 "$SRCROOT"/indent/tests/functional_test.sh \
 	"$DSTROOT"/AppleInternal/Tests/developer_cmds/indent/indent_test.sh
-
-install -d -m 0755 \
-	"$DSTROOT"/AppleInternal/Tests/developer_cmds/unifdef
-install -m 0755 "$SRCROOT"/unifdef/tests/unifdef_test.sh \
-	"$DSTROOT"/AppleInternal/Tests/developer_cmds/unifdef/unifdef_test.sh
 
 install -d -m 0755 \
 	"$DSTROOT"/AppleInternal/CoreOS/BATS/unit_tests

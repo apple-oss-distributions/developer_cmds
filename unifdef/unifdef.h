@@ -47,26 +47,27 @@
 #define fbinmode(fp) (fp)
 
 #ifdef __APPLE__
-#define replace(old, new) _apple_replace(old, new)
-static __inline int _apple_replace(char *old, char *new) {
-	int ret;
+static inline int
+replace(const char *old, const char *new)
+{
 	copyfile_state_t s;
-	s = copyfile_state_alloc();
+	int ret;
 
+	s = copyfile_state_alloc();
+	if (s == NULL)
+		return (-1);
 	ret = copyfile(old, new, s, COPYFILE_ALL);
 	copyfile_state_free(s);
-
-	if (ret < 0) {
-		return -1;
-	}
-
-	return unlink(old);
+	if (ret != 0)
+		return (-1);
+	ret = unlink(old);
+	if (ret != 0)
+		return (-1);
+	return (0);
 }
-#else
+#else /* !__APPLE__ */
 #define replace(old,new) rename(old,new)
-#endif
-
-
+#endif /* __APPLE__ */
 
 static FILE *
 mktempmode(char *tmp, int mode)

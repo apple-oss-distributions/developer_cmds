@@ -1,4 +1,6 @@
-set -e -x
+#!/bin/sh
+
+set -ex
 
 BINDIR="$DSTROOT"/"$DT_TOOLCHAIN_DIR"/usr/bin
 MANDIR="$DSTROOT"/"$DT_TOOLCHAIN_DIR"/usr/share/man/man1

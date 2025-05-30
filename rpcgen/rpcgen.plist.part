@@ -1,0 +1,19 @@
+<dict>
+	<key>OpenSourceProject</key>
+	<string>asa</string>
+	<key>OpenSourceVersion</key>
+	<string>1998-12-19</string>
+	<key>OpenSourceWebsiteURL</key>
+	<string>https://github.com/NetBSD/src/tree/e4ac7024d0473e71da84a400fada88dfa9590324/usr.bin/rpcgen</string>
+	<key>OpenSourceImportDate</key>
+	<string>1999-04-23</string>
+	<key>OpenSourceLicense</key>
+	<string>BSD</string>
+	<key>OpenSourceModifications</key>
+	<array>
+                <string>Miscellaneous build fixes</string>
+		<string>Add support for quadruple and hyper</string>
+		<string>Fix buffer overflow when parsing -Y option (152088884)</string>
+                <string>Fix buffer overflow when parsing function argument names (152097962)</string>
+	</array>
+</dict>
